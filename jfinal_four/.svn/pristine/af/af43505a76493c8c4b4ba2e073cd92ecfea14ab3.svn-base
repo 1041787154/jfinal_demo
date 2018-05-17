@@ -1,0 +1,71 @@
+package com.jfinal_four.controller;
+
+import com.jfinal.core.Controller;
+import com.jfinal_four.model.User;
+
+public class userController extends Controller{
+	/**
+	 * 
+	 * 呈现用户的相关信息
+	 */
+	public void  index() {
+		String sql = "select * from user_t";
+		setAttr("objectlist",User.dao.find(sql));
+		renderFreeMarker("index.html");
+	}
+	/**
+	 * 去向添加用户界面
+	 */
+	public void addUser() {
+		renderFreeMarker("adduser.html");
+	}
+	/**
+	 * 处理添加用户
+	 */
+    public void  doAddUser() {
+		User user = getModel(User.class);
+		boolean tag = user.save();
+		if (tag)
+			redirect("/user/");
+			
+		else 
+			renderText("sorry!添加失败");	
+	}
+    /**
+     * 删除用户信息
+     */
+	public void deleteUserById() {
+		int id = getParaToInt(0);
+		boolean tag = User.dao.deleteById(id);
+		if(tag)
+			redirect("/user/");
+		else 
+			renderTemplate("sorry!删除失败");
+		
+	}
+	/**
+	 * 查询单条用户信息
+	 */
+    public void  queryUserById() {
+		int id = getParaToInt(0);
+		String sql = "select * from user_t where id = ? limit 1";
+		User user = User.dao.findFirst(sql,id);
+		System.out.println("更新结果user:"+user);
+		setAttr("user", user);
+		renderFreeMarker("edituser.html");
+	}
+    /**
+	 * 更新用户信息
+	 */
+    public void  updateUser() {
+    	User user = getModel(User.class);
+    	System.out.println("更新用户信息"+user);
+		boolean tag  = user.update();
+		if(tag)
+			redirect("/user/");
+		else 
+			renderText("sorry!更新失败");
+		
+	}
+
+}

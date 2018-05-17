@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>编辑用户界面</title>
+</head>
+<body>
+<form action="${contextPath}/user/updateUser" method="post">
+    <#include "userform.html">
+</form>
+</body>
+</html>

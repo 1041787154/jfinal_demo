@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>所有用户相关信息</title>
+</head>
+<body>
+<p><a href="${contextPath}/user/addUser">添加用户</a></p>
+<table>
+   <tr>
+    <td>用户名</td>
+    <td>真实姓名</td>
+    <td>介绍</td>
+    <td>操作</td>
+   </tr>
+   <#list objectlist as obj>
+       <tr>
+         <td>${(obj.username)!''}</td>
+         <td>${(obj.realname)!''}</td>
+         <td>${(obj.detail)!''}</td>
+         <td>
+             <a href="${contextPath}/user/queryUserById/${(obj.id)!''}">编辑</a> 
+             <a href="${contextPath}/user/deleteUserById/${(obj.id)!''}">删除</a> 
+         </td>
+       </tr>
+   </#list>    
+</table>
+</body>
+</html>

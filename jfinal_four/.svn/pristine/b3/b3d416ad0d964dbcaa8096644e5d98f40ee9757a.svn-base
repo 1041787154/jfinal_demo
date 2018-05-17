@@ -1,0 +1,63 @@
+package com.jfinal_four.config;
+
+
+import com.jfinal.config.Constants;
+import com.jfinal.config.Handlers;
+import com.jfinal.config.Interceptors;
+import com.jfinal.config.JFinalConfig;
+import com.jfinal.config.Plugins;
+import com.jfinal.config.Routes;
+import com.jfinal.ext.handler.ContextPathHandler;
+import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.render.ViewType;
+import com.jfinal.template.Engine;
+import com.jfinal_four.controller.userController;
+import com.jfinal_four.model.User;
+
+public class config extends JFinalConfig{
+
+	@Override
+	public void configConstant(Constants me) {
+		PropKit.use("a_little_config.txt");
+		me.setViewType(ViewType.FREE_MARKER);
+		me.setDevMode(PropKit.getBoolean("devMode",true));
+	}
+
+	@Override
+	public void configRoute(Routes me) {
+		me.add("/",userController.class);
+		me.add("/user",userController.class);
+	}
+
+	@Override
+	public void configEngine(Engine me) {
+		
+	}
+
+	/**
+	 * 映射实体和数据库中的表格 
+	 */
+	@Override
+	public void configPlugin(Plugins me) {
+		String user = PropKit.get("user");
+		String pass = PropKit.get("password");
+		DruidPlugin druid = new DruidPlugin(PropKit.get("jdbcUrl"),user,pass);//阿里连接池
+		me.add(druid);
+		ActiveRecordPlugin aPlugin = new ActiveRecordPlugin(druid);//热拔插件
+		me.add(aPlugin);
+		aPlugin.addMapping("user_t", User.class);//实体和表哥的映射
+	}
+
+	@Override
+	public void configInterceptor(Interceptors me) {
+		
+	}
+
+	@Override
+	public void configHandler(Handlers me) {
+		me.add(new ContextPathHandler("contextPath"));//设置上下路径
+	}
+
+}

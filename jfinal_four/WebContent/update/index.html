@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>文件上传！</title>
+</head>
+<body>
+<p>文件上传操作：</p>
+<form action="${contextPath}/update/doUpdate" method="post" enctype="multipart/form-data">
+    <input type="text" name="title" maxlength="50" size="20"><br>
+    <input type="file" name="filename"><br>
+    <input type="submit" value="确定">
+</form>
+</body>
+</html>
