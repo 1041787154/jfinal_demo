@@ -28,6 +28,9 @@ public class config extends JFinalConfig{
 		me.setBaseUploadPath("D:\\tomcatInstall\\apache-tomcat-8.5.30\\webapps\\jfinal_four_upload");
 	}
 
+	
+	
+	//dfsdfsdfsdf
 	@Override
 	public void configRoute(Routes me) {//配置路由。
 		me.add("/",userController.class);
